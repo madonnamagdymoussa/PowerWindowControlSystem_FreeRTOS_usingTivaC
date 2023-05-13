@@ -58,6 +58,7 @@ void LimitSwitch2Handler(void *pvParameters);
 #define mainSW_INTERRUPT_ID		( ( IRQn_Type ) 0 )
 #define mainSW_INTERRUPT_ID_PortD ( ( IRQn_Type ) 3 )
 #define mainSW_INTERRUPT_ID_PortE ( ( IRQn_Type ) 4 )
+
 u8_t IRSensor_HC_05[30]={"obstacle detected"};
 
 
@@ -113,6 +114,7 @@ int main(void)
 	   AutoSwitch2Queue = xQueueCreate( 1, sizeof( unsigned char ) );
 	   AutoSwitch3Queue = xQueueCreate( 1, sizeof( unsigned char ) );
 	   AutoSwitch4Queue = xQueueCreate( 1, sizeof( unsigned char ) );
+		 
      NVIC_SetPriority( mainSW_INTERRUPT_ID, 7 );
 		 NVIC_SetPriority( mainSW_INTERRUPT_ID_PortD, 7 );
 		 NVIC_SetPriority( mainSW_INTERRUPT_ID_PortE, 7 );
@@ -353,7 +355,7 @@ void OpenWindowAutomatically (void*pvParameters){
 
 				 if(xStatus2 == pdPASS)
 		{
-			HC05_WriteString("Open window automatically switch2\n");
+			HC05_WriteString("close window automatically switch2\n");
 			DcMotor_TurnOn_AnticlockWise(MotorID_1);
 			GPTM_GenerateDelay(GPTM_Config_ArrPtrStruct[0], 420, milli_Sec);
 			DcMotor_TurnOff();
@@ -374,7 +376,7 @@ void OpenWindowAutomatically (void*pvParameters){
 				xStatus4 = xQueueReceive( AutoSwitch4Queue, &AutoSwitchQueue_CounterVar, 100 / portTICK_RATE_MS );
 		if(xStatus4 == pdPASS)
 		{
-			HC05_WriteString("Open window automatically switch4\n");
+			HC05_WriteString("close window automatically switch4\n");
 			DcMotor_TurnOn_AnticlockWise(MotorID_2);
 			GPTM_GenerateDelay(GPTM_Config_ArrPtrStruct[0], 420, milli_Sec);
 			DcMotor_TurnOff();
